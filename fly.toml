@@ -1,0 +1,25 @@
+app = "directus"
+primary_region = "ams"
+swap_size_mb = 512
+
+[build]
+  image = "directus/directus:latest"
+
+[env]
+  PORT=8055
+  PUBLIC_URL="https://directus.fly.dev"
+  WEBSOCKETS_ENABLED=true
+
+[http_service]
+  internal_port = 8055
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[deploy]
+  release_command = "node /directus/cli.js bootstrap"
+
+[processes]
+  app = "node /directus/cli.js start"
